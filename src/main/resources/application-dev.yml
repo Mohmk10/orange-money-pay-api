@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ompay_db
+    username: ompay_user
+    password: M@hmk!10
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+app:
+  jwt:
+    secret: om-pay-dev-secret-key-change-in-production-this-is-just-for-development
+    expiration: 86400000
+    refresh-expiration: 604800000
+
+logging:
+  level:
+    com.orangemoney.api: DEBUG
