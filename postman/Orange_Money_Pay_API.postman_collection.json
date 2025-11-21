@@ -1,0 +1,689 @@
+{
+  "info": {
+    "name": "Orange Money Pay API",
+    "description": "Collection complète pour tester tous les endpoints de l'API Orange Money Pay",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('userId', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Mohamed\",\n  \"lastName\": \"Diallo\",\n  \"phoneNumber\": \"771234567\",\n  \"email\": \"mohamed@example.com\",\n  \"pin\": \"1234\",\n  \"confirmPin\": \"1234\",\n  \"password\": \"SecurePass123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('token', response.token);",
+                  "    pm.collectionVariables.set('userId', response.user.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"771234567\",\n  \"password\": \"SecurePass123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Verify Email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/verify?token=YOUR_TOKEN_HERE",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "verify"],
+              "query": [
+                {
+                  "key": "token",
+                  "value": "YOUR_TOKEN_HERE"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/account/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get Balance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/account/balance",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "balance"]
+            }
+          }
+        },
+        {
+          "name": "Get Account Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/account/details",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "details"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Mohamed Ali\",\n  \"lastName\": \"Diallo\",\n  \"email\": \"mohamed.updated@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/account/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["account", "profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transfers",
+      "item": [
+        {
+          "name": "Initiate Transfer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 5000,\n  \"receiverPhoneNumber\": \"781234567\",\n  \"description\": \"Remboursement\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers/initiate",
+              "host": ["{{baseUrl}}"],
+              "path": ["transfers", "initiate"]
+            }
+          }
+        },
+        {
+          "name": "Get Transfer History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/transfers/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["transfers", "history"]
+            }
+          }
+        },
+        {
+          "name": "Get Transfer by Reference",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/transfers/TRF2511210126458995",
+              "host": ["{{baseUrl}}"],
+              "path": ["transfers", "TRF2511210126458995"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cash",
+      "item": [
+        {
+          "name": "Deposit Money",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 10000,\n  \"agentCode\": \"AG001234\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cash/deposit",
+              "host": ["{{baseUrl}}"],
+              "path": ["cash", "deposit"]
+            }
+          }
+        },
+        {
+          "name": "Withdraw Money",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 5000,\n  \"agentCode\": \"AG001234\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cash/withdrawal",
+              "host": ["{{baseUrl}}"],
+              "path": ["cash", "withdrawal"]
+            }
+          }
+        },
+        {
+          "name": "Cash History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cash/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["cash", "history"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bills",
+      "item": [
+        {
+          "name": "Pay Bill",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"ELECTRICITY\",\n  \"provider\": \"SENELEC\",\n  \"accountNumber\": \"123456789\",\n  \"amount\": 15000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bills/pay",
+              "host": ["{{baseUrl}}"],
+              "path": ["bills", "pay"]
+            }
+          }
+        },
+        {
+          "name": "Bills History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/bills/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["bills", "history"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recharge",
+      "item": [
+        {
+          "name": "Recharge Airtime",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"AIRTIME\",\n  \"phoneNumber\": \"771234567\",\n  \"amount\": 1000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recharge",
+              "host": ["{{baseUrl}}"],
+              "path": ["recharge"]
+            }
+          }
+        },
+        {
+          "name": "Recharge Internet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"INTERNET\",\n  \"phoneNumber\": \"771234567\",\n  \"amount\": 2500\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recharge",
+              "host": ["{{baseUrl}}"],
+              "path": ["recharge"]
+            }
+          }
+        },
+        {
+          "name": "Recharge History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recharge/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["recharge", "history"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Merchant",
+      "item": [
+        {
+          "name": "Pay Merchant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchantPhoneNumber\": \"781234567\",\n  \"amount\": 3500,\n  \"description\": \"Achat boutique\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/merchant/pay",
+              "host": ["{{baseUrl}}"],
+              "path": ["merchant", "pay"]
+            }
+          }
+        },
+        {
+          "name": "Merchant History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/merchant/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["merchant", "history"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bank",
+      "item": [
+        {
+          "name": "Link Bank Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bankName\": \"CBAO\",\n  \"accountNumber\": \"SN123456789012\",\n  \"accountHolderName\": \"Mohamed Diallo\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bank/link",
+              "host": ["{{baseUrl}}"],
+              "path": ["bank", "link"]
+            }
+          }
+        },
+        {
+          "name": "Get Linked Accounts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/bank/accounts",
+              "host": ["{{baseUrl}}"],
+              "path": ["bank", "accounts"]
+            }
+          }
+        },
+        {
+          "name": "Transfer to Bank",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"linkedBankAccountId\": 1,\n  \"direction\": \"TO_BANK\",\n  \"amount\": 50000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bank/transfer/to-bank",
+              "host": ["{{baseUrl}}"],
+              "path": ["bank", "transfer", "to-bank"]
+            }
+          }
+        },
+        {
+          "name": "Transfer from Bank",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"linkedBankAccountId\": 1,\n  \"direction\": \"FROM_BANK\",\n  \"amount\": 50000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bank/transfer/from-bank",
+              "host": ["{{baseUrl}}"],
+              "path": ["bank", "transfer", "from-bank"]
+            }
+          }
+        },
+        {
+          "name": "Bank Transfer History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/bank/transfers/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["bank", "transfers", "history"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "QR Code",
+      "item": [
+        {
+          "name": "Generate My QR Code",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/qrcode/generate",
+              "host": ["{{baseUrl}}"],
+              "path": ["qrcode", "generate"]
+            }
+          }
+        },
+        {
+          "name": "Generate Merchant QR Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/qrcode/generate/merchant?amount=5000&reference=INV-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["qrcode", "generate", "merchant"],
+              "query": [
+                {
+                  "key": "amount",
+                  "value": "5000"
+                },
+                {
+                  "key": "reference",
+                  "value": "INV-001"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Scan and Pay",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"qrToken\": \"YOUR_QR_TOKEN_HERE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/qrcode/scan",
+              "host": ["{{baseUrl}}"],
+              "path": ["qrcode", "scan"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
