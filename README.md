@@ -1,350 +1,265 @@
-# 🍊 Orange Money Pay API
+# 🍊 Orange Money Pay API - Clone Complet
 
-API REST complète simulant Orange Money (Application de paiement mobile #1 au Sénégal avec 5M+ utilisateurs).
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.7-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-blue.svg)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Deploy](https://img.shields.io/badge/Deploy-Render-46E3B7.svg)](https://orange-money-pay-api.onrender.com)
+[![API Status](https://img.shields.io/badge/API-Live-success.svg)](https://orange-money-pay-api.onrender.com/swagger-ui.html)
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
-![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
-![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white)
-![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white)
-![MapStruct](https://img.shields.io/badge/MapStruct-FF6600?style=for-the-badge&logo=java&logoColor=white)
-![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
+> Clone complet de l'API Orange Money Pay du Sénégal - Système de paiement mobile utilisé par 5 millions d'utilisateurs
 
+## 🚀 Démonstration en Ligne
+
+- **API Base URL**: `https://orange-money-pay-api.onrender.com/api/v1`
+- **Documentation Swagger**: [https://orange-money-pay-api.onrender.com/swagger-ui.html](https://orange-money-pay-api.onrender.com/swagger-ui.html)
+- **Status**: ✅ Production
+
+⚠️ **Note**: Le service gratuit Render se met en veille après 15 minutes d'inactivité. Le premier appel après veille peut prendre 30-60 secondes.
 
 ## 📋 Table des Matières
 
 - [Fonctionnalités](#-fonctionnalités)
-- [Stack Technique](#️-stack-technique)
 - [Architecture](#-architecture)
+- [Technologies](#-technologies)
 - [Installation](#-installation)
-- [Configuration](#️-configuration)
+- [Configuration](#-configuration)
+- [Utilisation](#-utilisation)
 - [Endpoints API](#-endpoints-api)
-- [Tests](#-tests)
-- [Documentation](#-documentation)
 - [Déploiement](#-déploiement)
-- [Contribuer](#-contribuer)
+- [Tests](#-tests)
+- [Contribution](#-contribution)
 
----
+## ✨ Fonctionnalités
 
-## 🚀 Fonctionnalités
+### 🔐 Authentification & Sécurité
+- ✅ Inscription avec validation email
+- ✅ Connexion sécurisée avec JWT
+- ✅ Refresh token
+- ✅ Vérification en 2 étapes
+- ✅ Gestion des sessions
+- ✅ Réinitialisation de mot de passe
 
-### ✅ Modules Implémentés
+### 💰 Gestion des Comptes
+- ✅ Création automatique de compte OM
+- ✅ Numérotation unique (OM + téléphone + 3 chiffres)
+- ✅ Soldes et historiques de transactions
+- ✅ Niveaux KYC (LEVEL_0 à LEVEL_3)
+- ✅ Limites de transaction personnalisées
+- ✅ Blocage/déblocage de compte
 
-#### 🔐 Authentification & Sécurité
-- Inscription avec validation personnalisée (numéro Orange, PIN 4 chiffres)
-- Connexion avec JWT Authentication
-- Vérification email (simulée en dev)
-- Gestion du refresh token
-- Sécurité Spring Security complète
+### 💸 Transactions
+- ✅ Transfert d'argent (P2P)
+- ✅ Dépôt via agent/distributeur
+- ✅ Retrait via agent/distributeur
+- ✅ Transfert international
+- ✅ Paiement marchand
+- ✅ Paiement de factures (eau, électricité, internet, etc.)
+- ✅ Achat de crédit téléphonique
+- ✅ Paiement QR Code
 
-#### 💰 Gestion de Compte
-- Consultation du solde et détails du compte
-- Mise à jour du profil utilisateur
-- Historique complet des transactions
-- Limites journalières configurables
-- Niveaux KYC (Know Your Customer)
-
-#### 💸 Transferts d'Argent
-- Transfert national entre utilisateurs Orange Money
-- 2 transferts gratuits/jour (1-2000 FCFA)
-- Frais dégressifs selon le montant
-- Validation OTP pour montants > 50,000 FCFA
-- Historique des transferts avec filtres
-
-#### 🏦 Services Financiers
-- **Dépôts & Retraits** via agents
-- **Paiement de factures** (SENELEC, SEN'EAU, Canal+, etc.)
-- **Recharges** (Crédit téléphonique, Internet, Illimix)
-- **Paiements marchands** avec QR Code
-- **Liaison comptes bancaires** avec transferts bidirectionnels
-
-#### 📱 QR Code
-- Génération de QR Code personnel (recevoir de l'argent)
-- Génération de QR Code marchand (demande de paiement)
-- Scan et paiement via QR Code
-- Expiration automatique des QR Codes
-
----
-
-## 🛠️ Stack Technique
-
-### Backend
-- **Framework** : Spring Boot 3.5.7
-- **Langage** : Java 21 (LTS)
-- **Build Tool** : Maven 3.9+
-- **Base de données** : PostgreSQL 16
-
-### Sécurité
-- **Authentification** : JWT (JSON Web Tokens)
-- **Authorization** : Spring Security 6
-- **Cryptage** : BCrypt pour mots de passe et PIN
-
-### Mapping & Validation
-- **DTO Mapping** : MapStruct 1.6.3
-- **Validation** : Bean Validation (Jakarta)
-- **Custom Validators** : `@ValidPhoneNumber`, `@ValidPIN`, `@ValidAmount`, `@MatchingFields`
-
-### Documentation
-- **API Docs** : SpringDoc OpenAPI 3.0 (Swagger UI)
-- **Format** : OpenAPI Specification
-
-### ORM & Persistence
-- **ORM** : Hibernate 6.6
-- **JPA** : Spring Data JPA
-- **Projections** : Interface-based & Class-based
-- **Auditing** : Automatic `createdAt` / `updatedAt`
-
----
+### 🎯 Fonctionnalités Avancées
+- ✅ Favoris de bénéficiaires
+- ✅ Transactions planifiées
+- ✅ Demandes d'argent
+- ✅ Notifications en temps réel
+- ✅ Historique détaillé
+- ✅ Export de relevés (PDF/CSV)
+- ✅ Multi-devise (XOF, EUR, USD)
 
 ## 🏗️ Architecture
 
-### Clean Architecture
+### Modèle de Domaine
 ```
-src/main/java/com/orangemoney/api/
-├── common/                # Constantes, Enums, Utils
-│   ├── constants/         # Business rules (limites, frais, messages)
-│   ├── enums/             # TransactionType, Status, KycLevel, etc.
-│   └── util/              # Helpers (generators, calculators, encoders)
-├── config/                # Configuration Spring
-│   ├── JpaConfig.java
-│   ├── JwtProperties.java
-│   ├── SecurityConfig.java
-│   ├── SwaggerConfig.java
-│   └── CorsConfig.java
-├── entity/                # Entités JPA (12 tables)
-│   ├── BaseEntity.java    # Classe abstraite avec audit
-│   ├── User.java
-│   ├── Account.java
-│   ├── Transfer.java
-│   └── ...
-├── dto/                   # Data Transfer Objects
-│   ├── request/           # DTOs pour les requêtes
-│   ├── response/          # DTOs pour les réponses
-│   └── projection/        # JPA Projections optimisées
-├── mapper/                # MapStruct Mappers
-│   ├── UserMapper.java
-│   ├── AccountMapper.java
-│   └── TransferMapper.java
-├── validation/            # Custom Validators
-│   ├── annotation/        # Annotations de validation
-│   └── validator/         # Implémentations des validateurs
-├── repository/            # Spring Data JPA Repositories
-├── service/               # Business Logic
-│   └── impl/              # Implémentations des services
-├── controller/            # REST Controllers
-├── security/              # JWT & Security
-│   ├── JwtTokenProvider.java
-│   ├── JwtAuthenticationFilter.java
-│   ├── UserDetailsServiceImpl.java
-│   └── UserPrincipal.java
-└── exception/             # Exception Handling
-    ├── GlobalExceptionHandler.java
-    └── Custom Exceptions
+User (Utilisateur)
+├── Account (Compte Orange Money)
+├── Transactions (Historique)
+├── Favorites (Bénéficiaires favoris)
+├── ScheduledTransactions (Planifiées)
+└── MoneyRequests (Demandes d'argent)
+
+Transaction
+├── Sender (Émetteur)
+├── Receiver (Destinataire)
+├── Type (TRANSFER, DEPOSIT, WITHDRAWAL, etc.)
+└── Status (PENDING, COMPLETED, FAILED)
 ```
 
-### Base de Données (12 Tables)
-```sql
-users
-accounts
-transfers
-cash_transactions
-bills
-recharges
-merchant_payments
-linked_bank_accounts
-bank_transfers
-qr_codes
-verification_tokens
+### Architecture en Couches
+```
+┌─────────────────────────────────────┐
+│     Controllers (REST API)          │
+├─────────────────────────────────────┤
+│     Services (Business Logic)       │
+├─────────────────────────────────────┤
+│     Repositories (Data Access)      │
+├─────────────────────────────────────┤
+│     Entities (Domain Models)        │
+├─────────────────────────────────────┤
+│     PostgreSQL Database             │
+└─────────────────────────────────────┘
 ```
 
----
+## 🛠️ Technologies
 
-## 📦 Installation
+### Backend
+- **Framework**: Spring Boot 3.5.7
+- **Langage**: Java 21
+- **Base de données**: PostgreSQL 14+
+- **ORM**: Spring Data JPA / Hibernate
+- **Sécurité**: Spring Security + JWT
+- **Validation**: Bean Validation (JSR-380)
+- **Documentation**: Swagger/OpenAPI 3.0
+- **Build**: Maven
+
+### Dépendances Principales
+```xml
+<dependencies>
+    <!-- Spring Boot Starters -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    
+    <!-- JWT -->
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-api</artifactId>
+        <version>0.12.6</version>
+    </dependency>
+    
+    <!-- PostgreSQL -->
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+    </dependency>
+    
+    <!-- MapStruct -->
+    <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>1.6.3</version>
+    </dependency>
+    
+    <!-- Lombok -->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+    </dependency>
+    
+    <!-- Swagger -->
+    <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        <version>2.8.4</version>
+    </dependency>
+</dependencies>
+```
+
+## 💻 Installation
 
 ### Prérequis
-
-- Java 21+ ([OpenJDK](https://openjdk.org/))
-- Maven 3.9+
+- Java 21 ou supérieur
+- Maven 3.8+
 - PostgreSQL 14+
 - Git
 
-### Étapes
+### Cloner le Projet
 ```bash
-# 1. Cloner le repository
-git clone https://github.com/ton-username/om-pay-api.git
-cd om-pay-api
-
-# 2. Créer la base de données PostgreSQL
-psql -U postgres
-CREATE DATABASE ompay_db;
-CREATE ROLE ompay_user WITH LOGIN PASSWORD 'votre_mot_de_passe';
-GRANT ALL PRIVILEGES ON DATABASE ompay_db TO ompay_user;
-\c ompay_db
-GRANT ALL ON SCHEMA public TO ompay_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO ompay_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO ompay_user;
-\q
-
-# 3. Configurer application-dev.yml
-# Éditer src/main/resources/application-dev.yml avec tes credentials
-
-# 4. Compiler le projet
-mvn clean install -DskipTests
-
-# 5. Lancer l'application
-mvn spring-boot:run
+git clone https://github.com/Mohmk10/orange-money-pay-api.git
+cd orange-money-pay-api
 ```
 
-L'API sera accessible sur : **http://localhost:8080**
+### Configuration de la Base de Données
 
----
+1. **Créer la base de données** :
+```sql
+CREATE DATABASE ompay_db;
+CREATE USER ompay_user WITH PASSWORD 'votre_mot_de_passe';
+GRANT ALL PRIVILEGES ON DATABASE ompay_db TO ompay_user;
+```
 
-## ⚙️ Configuration
-
-### Profiles Spring
-
-**Dev** (Local) : `spring.profiles.active=dev`
+2. **Configurer** `src/main/resources/application-dev.yml` :
 ```yaml
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ompay_db
     username: ompay_user
     password: votre_mot_de_passe
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+app:
+  jwt:
+    secret: votre_cle_secrete_jwt_minimum_32_caracteres
+    expiration: 86400000
+    refresh-expiration: 604800000
 ```
 
-**Prod** (Neon Cloud) : `spring.profiles.active=prod`
-```yaml
-spring:
-  datasource:
-    url: jdbc:postgresql://your-neon-host/ompay_db?sslmode=require
-    username: ompay_user
-    password: ${DB_PASSWORD}
-```
-
-### Variables d'Environnement
+### Compiler et Lancer
 ```bash
-export JWT_SECRET=votre-secret-key-super-securise
-export DB_PASSWORD=votre-mot-de-passe-db
+# Compiler
+mvn clean install
+
+# Lancer en mode dev
+mvn spring-boot:run
+
+# Ou lancer le JAR
+java -jar target/api-0.0.1-SNAPSHOT.jar
 ```
 
----
+L'API sera accessible sur `http://localhost:8080`
 
-## 📡 Endpoints API
+## ⚙️ Configuration
 
-### Base URL : `/api/v1`
+### Générer une Clé JWT Sécurisée
+```bash
+openssl rand -base64 32
+```
 
-### 🔐 Authentification
+### Profils Spring
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/auth/register` | Inscription | ❌ |
-| POST | `/auth/login` | Connexion | ❌ |
-| GET | `/auth/verify?token=XXX` | Vérifier email | ❌ |
-| POST | `/auth/resend-verification` | Renvoyer email | ❌ |
+- **dev** : Développement local (logs détaillés, show-sql activé)
+- **prod** : Production (logs minimaux, optimisations activées)
+```bash
+# Lancer en mode production
+mvn spring-boot:run -Dspring-boot.run.profiles=prod
+```
 
-### 👤 Compte
+## 🎯 Utilisation
 
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| GET | `/account/profile` | Mon profil | ✅ |
-| PUT | `/account/profile` | Modifier profil | ✅ |
-| GET | `/account/balance` | Consulter solde | ✅ |
-| GET | `/account/details` | Détails du compte | ✅ |
-
-### 💸 Transferts
-
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/transfers/initiate` | Envoyer de l'argent | ✅ |
-| GET | `/transfers/history` | Historique | ✅ |
-| GET | `/transfers/{reference}` | Détails transfert | ✅ |
-
-### 💵 Cash (Dépôts/Retraits)
-
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/cash/deposit` | Dépôt via agent | ✅ |
-| POST | `/cash/withdrawal` | Retrait via agent | ✅ |
-| GET | `/cash/history` | Historique cash | ✅ |
-
-### 🧾 Factures
-
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/bills/pay` | Payer une facture | ✅ |
-| GET | `/bills/history` | Historique factures | ✅ |
-
-### 📱 Recharges
-
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/recharge` | Recharge crédit/internet | ✅ |
-| GET | `/recharge/history` | Historique recharges | ✅ |
-
-### 🏪 Marchands
-
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/merchant/pay` | Payer un marchand | ✅ |
-| GET | `/merchant/history` | Historique paiements | ✅ |
-
-### 🏦 Banque
-
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/bank/link` | Lier compte bancaire | ✅ |
-| GET | `/bank/accounts` | Comptes liés | ✅ |
-| DELETE | `/bank/unlink/{id}` | Délier compte | ✅ |
-| POST | `/bank/transfer/to-bank` | Vers banque | ✅ |
-| POST | `/bank/transfer/from-bank` | Depuis banque | ✅ |
-| GET | `/bank/transfers/history` | Historique | ✅ |
-
-### 📷 QR Code
-
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| GET | `/qrcode/generate` | Mon QR Code | ✅ |
-| POST | `/qrcode/generate/merchant` | QR Code marchand | ✅ |
-| POST | `/qrcode/scan` | Scanner & payer | ✅ |
-
----
-
-## 📚 Documentation
-
-### Swagger UI
-
-Une fois l'application lancée, accède à :
-
-**http://localhost:8080/swagger-ui.html**
-
-### OpenAPI JSON
-
-**http://localhost:8080/api-docs**
-
----
-
-## 🧪 Tests
-
-### Exemples avec cURL
-
-#### 1. Inscription
+### Inscription
 ```bash
 curl -X POST http://localhost:8080/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
-    "firstName": "Mohamed",
-    "lastName": "Kouyate",
+    "firstName": "John",
+    "lastName": "Doe",
     "phoneNumber": "771234567",
-    "email": "mohamed@example.com",
-    "pin": "5678",
-    "confirmPin": "5678",
+    "email": "john.doe@example.com",
+    "pin": "1587",
+    "confirmPin": "1587",
     "password": "SecurePass123"
   }'
 ```
 
-#### 2. Connexion
+### Connexion
 ```bash
 curl -X POST http://localhost:8080/api/v1/auth/login \
   -H "Content-Type: application/json" \
@@ -354,102 +269,156 @@ curl -X POST http://localhost:8080/api/v1/auth/login \
   }'
 ```
 
-**Copie le `token` de la réponse pour les requêtes suivantes.**
-
-#### 3. Consulter le Solde
-```bash
-curl -X GET http://localhost:8080/api/v1/account/balance \
-  -H "Authorization: Bearer TON_TOKEN_JWT"
+**Réponse** :
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "refreshToken": "eyJhbGciOiJIUzI1NiJ9...",
+  "tokenType": "Bearer",
+  "user": {
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "phoneNumber": "771234567",
+    "account": {
+      "accountNumber": "OM771234567123",
+      "balance": 0,
+      "status": "ACTIVE"
+    }
+  }
+}
 ```
 
-#### 4. Faire un Transfert
+### Transfert d'Argent
 ```bash
-curl -X POST http://localhost:8080/api/v1/transfers/initiate \
+curl -X POST http://localhost:8080/api/v1/transactions/transfer \
+  -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer TON_TOKEN_JWT" \
   -d '{
+    "receiverPhoneNumber": "779876543",
     "amount": 5000,
-    "receiverPhoneNumber": "781234567",
+    "pin": "1587",
     "description": "Remboursement"
   }'
 ```
 
----
+## 📚 Endpoints API
 
-## 🚢 Déploiement
+### Authentification (`/api/v1/auth`)
 
-### Docker (Recommandé)
-```dockerfile
-FROM openjdk:21-jdk-slim
-WORKDIR /app
-COPY target/api-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+| Méthode | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/register` | Inscription utilisateur |
+| POST | `/login` | Connexion |
+| POST | `/refresh` | Rafraîchir le token |
+| POST | `/verify-email` | Vérifier l'email |
+| POST | `/forgot-password` | Mot de passe oublié |
+| POST | `/reset-password` | Réinitialiser mot de passe |
+
+### Utilisateurs (`/api/v1/users`)
+
+| Méthode | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/profile` | Profil utilisateur |
+| PUT | `/profile` | Mettre à jour profil |
+| PUT | `/change-password` | Changer mot de passe |
+| PUT | `/change-pin` | Changer PIN |
+
+### Transactions (`/api/v1/transactions`)
+
+| Méthode | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/transfer` | Transfert P2P |
+| POST | `/deposit` | Dépôt |
+| POST | `/withdrawal` | Retrait |
+| POST | `/international-transfer` | Transfert international |
+| POST | `/merchant-payment` | Paiement marchand |
+| POST | `/bill-payment` | Paiement facture |
+| POST | `/airtime-purchase` | Achat crédit |
+| POST | `/qr-payment` | Paiement QR |
+| GET | `/history` | Historique |
+| GET | `/{id}` | Détails transaction |
+
+### Comptes (`/api/v1/accounts`)
+
+| Méthode | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/` | Détails compte |
+| GET | `/balance` | Solde |
+| PUT | `/limits` | Modifier limites |
+| GET | `/statement` | Relevé de compte |
+
+### Plus d'Endpoints...
+
+Voir la **documentation Swagger complète** : [https://orange-money-pay-api.onrender.com/swagger-ui.html](https://orange-money-pay-api.onrender.com/swagger-ui.html)
+
+## 🚀 Déploiement
+
+### Déploiement sur Render
+
+1. **Fork ce repository**
+
+2. **Créer une base PostgreSQL** sur Render
+
+3. **Créer un Web Service** :
+    - Runtime: Docker
+    - Branch: main
+    - Variables d'environnement :
 ```
+     SPRING_PROFILES_ACTIVE=prod
+     APP_JWT_SECRET=votre_cle_jwt_32_caracteres_minimum
+```
+
+4. **Déployer** - Render va automatiquement builder et déployer
+
+### URL de Production
+```
+https://orange-money-pay-api.onrender.com
+```
+
+## 🧪 Tests
 ```bash
-docker build -t om-pay-api .
-docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod om-pay-api
+# Tests unitaires
+mvn test
+
+# Tests avec couverture
+mvn test jacoco:report
+
+# Tests d'intégration
+mvn verify
 ```
-
-### Heroku
-```bash
-heroku create om-pay-api
-heroku addons:create heroku-postgresql:mini
-git push heroku main
-```
-
-### Railway / Render
-
-Connecte ton repo GitHub et déploie automatiquement.
-
----
-
-## 🤝 Contribuer
-
-Les contributions sont les bienvenues ! Voici comment procéder :
-
-1. Fork le projet
-2. Crée une branche (`git checkout -b feature/AmazingFeature`)
-3. Commit tes changements (`git commit -m 'Add: Amazing Feature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvre une Pull Request
-
----
-
-## 📄 License
-
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
----
-
-## 👤 Auteur
-
-**Mohamed Kouyate**  
-Développeur Fullstack | Spring Boot & Flutter  
-📍 Dakar, Sénégal
-
-- GitHub: [@ton-username](https://github.com/ton-username)
-- LinkedIn: [Mohamed Kouyate](https://linkedin.com/in/ton-profil)
-- Email: mohamed@example.com
-
----
-
-## 🙏 Remerciements
-
-- Orange Money Sénégal pour l'inspiration
-- Spring Boot & Hibernate pour les frameworks robustes
-- La communauté open-source
-
----
 
 ## 📊 Statistiques du Projet
 
-- **Lignes de code** : ~10,000+
-- **Endpoints** : 50+
-- **Tables DB** : 12
-- **Temps de développement** : 2 semaines
-- **Couverture de tests** : À implémenter
+- **80+ Endpoints REST**
+- **11 Entités JPA**
+- **15+ Services métier**
+- **Validation complète** avec annotations personnalisées
+- **Gestion d'erreurs** centralisée
+- **Pagination** et **filtrage** avancés
+- **Soft delete** sur toutes les entités
+
+## 🤝 Contribution
+
+Malheureusement ou heureusement, ce projet est fini.
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## 👨‍💻 Auteur
+
+**Mohamed Makan KOUYATÉ**
+- GitHub: [@Mohmk10](https://github.com/Mohmk10)
+- LinkedIn: https://www.linkedin.com/in/mohamed-makan-kouyat%C3%A9-925414262/
+- Email: kouyatemakan100@gmail.com
+
+## 🙏 Remerciements
+
+- Coach Birane Baila Wane Architecte Logiciel : email : douvewane85@gmail.com
+- Orange Money Sénégal pour l'inspiration
+- La communauté Spring Boot
 
 ---
 
-**⭐ Si ce projet t'aide, n'hésite pas à le star sur GitHub !**
+⭐ **Si ce projet vous a plus, n'hésitez pas à lui donner une étoile !**
