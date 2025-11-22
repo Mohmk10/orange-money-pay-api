@@ -41,5 +41,3 @@ build/
 ### Environment ###
 .env
 .env.local
-application-prod.yml
-application-dev.yml

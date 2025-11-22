@@ -1,0 +1,31 @@
+# ============================================
+# Profile PROD - Render Cloud Deployment
+# ============================================
+
+spring:
+  datasource:
+    url: jdbc:postgresql://dpg-d4gdtqvdiees73aoec9g-a.frankfurt-postgres.render.com/ompay_db_ikk9
+    username: ompay_user
+    password: PDvFMEJbad1zQ6mKfSFMZF9hnptWi8uC
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+server:
+  port: ${PORT:8080}
+
+app:
+  jwt:
+    secret: ${APP_JWT_SECRET}
+    expiration: 86400000
+    refresh-expiration: 604800000
+
+logging:
+  level:
+    root: INFO
+    com.orangemoney.api: INFO
