@@ -16,21 +16,9 @@ spring:
 
 app:
   jwt:
-    secret: +mRLd8xssJvxJWavwX5+T7DiE1iuxAGHY2uWdEv/Hls=
+    secret: K9mP2xL7nQ4vR8wT3yU6zF5bN1cD4gH0
     expiration: 86400000
     refresh-expiration: 604800000
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health
-  endpoint:
-    health:
-      show-details: always
-  health:
-    db:
-      enabled: false
 
 logging:
   level:
