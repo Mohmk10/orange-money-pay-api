@@ -12,10 +12,19 @@ spring:
 
 app:
   jwt:
-    secret: om-pay-dev-secret-key-change-in-production-this-is-just-for-development
+    secret: +mRLd8xssJvxJWavwX5+T7DiE1iuxAGHY2uWdEv/Hls=
     expiration: 86400000
     refresh-expiration: 604800000
 
 logging:
   level:
     com.orangemoney.api: DEBUG
+
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: health,info
+    endpoint:
+      health:
+        show-details: always
