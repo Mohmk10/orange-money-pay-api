@@ -4,9 +4,9 @@
 
 spring:
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://dpg-d4gdtqvdiees73aoec9g-a.frankfurt-postgres.render.com/ompay_db_ikk9
+    username: ompay_user
+    password: PDvFMEJbad1zQ6mKfSFMZF9hnptWi8uC
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 5
@@ -15,6 +15,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
   port: ${PORT:8080}
