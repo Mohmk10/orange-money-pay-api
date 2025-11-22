@@ -1,3 +1,7 @@
+# ============================================
+# Profile DEV - Local Development Environment
+# ============================================
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ompay_db
@@ -16,15 +20,18 @@ app:
     expiration: 86400000
     refresh-expiration: 604800000
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+  health:
+    db:
+      enabled: false
+
 logging:
   level:
     com.orangemoney.api: DEBUG
-
-  management:
-    endpoints:
-      web:
-        exposure:
-          include: health,info
-    endpoint:
-      health:
-        show-details: always
